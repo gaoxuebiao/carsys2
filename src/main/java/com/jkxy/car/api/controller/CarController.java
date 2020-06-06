@@ -3,11 +3,11 @@ package com.jkxy.car.api.controller;
 import com.jkxy.car.api.pojo.Car;
 import com.jkxy.car.api.service.CarService;
 import com.jkxy.car.api.utils.JSONResult;
+import com.jkxy.car.api.utils.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 
 @RestController
@@ -85,4 +85,32 @@ public class CarController {
         carService.insertCar(car);
         return JSONResult.ok();
     }
+
+    /**
+     * 购车
+     *
+     * @param id       车辆id
+     * @param buyCount 购买数量
+     * @return
+     */
+    @GetMapping("buyCar")
+    public JSONResult buyCar(@RequestParam("id") int id, @RequestParam("buyCount") int buyCount) {
+        return carService.buyCar(id, buyCount);
+    }
+
+    /**
+     * 按品牌获取
+     *
+     * @param carName 车辆品牌
+     * @param current 当前页
+     * @param size    分页大小
+     * @return
+     */
+    @GetMapping("listByCarName")
+    public JSONResult buyCar(@RequestParam("carName") String carName,
+                             @RequestParam("current") int current, @RequestParam("size") int size) {
+        Pager<Car> res = carService.listByCarName(carName, current, size);
+        return JSONResult.ok(res);
+    }
+
 }
